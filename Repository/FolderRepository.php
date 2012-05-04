@@ -9,65 +9,70 @@ use Doctrine\ORM\EntityNotFoundException;
 
 class FolderRepository extends EntityRepository
 {
-	public function save(Folder $gallery, EntityManager $em)
-	{
-		$em->persist($gallery);
-		$em->flush();
-	}
-	
-	public function delete(Folder $gallery, EntityManager $em)
-	{
-		$this->deleteFiles($gallery, $em);
-		$this->deleteChildren($gallery, $em);
-		$em->remove($gallery);
-		$em->flush();
-	}
-	
-	public function deleteFiles(Folder $gallery, EntityManager $em){
-		foreach($gallery->getFiles() as $item){
-			$em->remove($item);
-		}
-	}
-	
-	public function deleteChildren(Folder $gallery, EntityManager $em){
-		foreach($gallery->getChildren() as $child){
-			$this->deleteFiles($child, $em);
-			$this->deleteChildren($child, $em);
-			$em->remove($child);
-		}
-	}
-	
+    public function save(Folder $gallery)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($gallery);
+        $em->flush();
+    }
+
+    public function delete(Folder $gallery)
+    {
+        $this->deleteFiles($gallery);
+        $this->deleteChildren($gallery);
+        $em = $this->getEntityManager();
+        $em->remove($gallery);
+        $em->flush();
+    }
+
+    public function deleteFiles(Folder $gallery)
+    {
+        $em = $this->getEntityManager();
+        foreach ($gallery->getFiles() as $item) {
+            $em->remove($item);
+        }
+        $em->flush();
+    }
+
+    public function deleteChildren(Folder $gallery)
+    {
+        $em = $this->getEntityManager();
+        foreach ($gallery->getChildren() as $child) {
+            $this->deleteFiles($child);
+            $this->deleteChildren($child);
+            $em->remove($child);
+        }
+        $em->flush();
+    }
+
     public function getAllFolders($limit = null)
     {
-            $qb = $this->createQueryBuilder('folder')
-                       ->select('folder')
-                       ->where('folder.parent is null')
-            		   ->orderby('folder.sequencenumber');
-            if (false === is_null($limit))
-                $qb->setMaxResults($limit);
+        $qb = $this->createQueryBuilder('folder')->select('folder')->where('folder.parent is null')->orderby('folder.sequencenumber');
+        if (false === is_null($limit))
+            $qb->setMaxResults($limit);
 
-            return $qb->getQuery()
-                      ->getResult();
+        return $qb->getQuery()->getResult();
     }
-    
+
     public function getAllFoldersByType($limit = null)
     {
-    	$all = $this->getAllFolders($limit);
-    	$bytype=array();
-    	foreach($all as $gal){
-    		if(!isset($bytype[$gal->getStrategy()->getType()])) $bytype[$gal->getStrategy()->getType()] = array();
-    		$bytype[$gal->getStrategy()->getType()][] = $gal;
-    	}
-    	return $bytype;
+        $all = $this->getAllFolders($limit);
+        $bytype = array();
+        foreach ($all as $gal) {
+            if (!isset($bytype[$gal->getStrategy()->getType()]))
+                $bytype[$gal->getStrategy()->getType()] = array();
+            $bytype[$gal->getStrategy()->getType()][] = $gal;
+        }
+        return $bytype;
     }
 
-    public function getFolder($folder_id, EntityManager $em)
+    public function getFolder($folder_id)
     {
-    	$folder = $em->getRepository('KunstmaanMediaBundle:Folder')->find($folder_id);
-    	if (!$folder) {
-    		throw new EntityNotFoundException('The id given for the folder is not valid.');
-    	}
-    	return $folder;
+        $folder = $this->find($folder_id);
+        if (!$folder) {
+            throw new EntityNotFoundException('The id given for the folder is not valid.');
+        }
+        return $folder;
     }
 
 }

@@ -37,7 +37,7 @@ class FolderController extends Controller
      */
     function showAction($id){
         $em = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id);
         $galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
                                 ->getAllFoldersByType();
 
@@ -69,7 +69,7 @@ class FolderController extends Controller
     public function deleteAction($gallery_id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id);
         
         $em->getRepository('KunstmaanMediaBundle:Folder')->delete($gallery, $em);
 
@@ -87,7 +87,7 @@ class FolderController extends Controller
     public function editAction($gallery_id)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id);
         
         $request = $this->getRequest();
         $form = $this->createForm($gallery->getFormType($gallery), $gallery);
@@ -95,7 +95,7 @@ class FolderController extends Controller
             if ('POST' == $request->getMethod()) {
                 $form->bindRequest($request);
                 if ($form->isValid()){
-                    $em->getRepository('KunstmaanMediaBundle:Folder')->save($gallery, $em);
+                    $em->getRepository('KunstmaanMediaBundle:Folder')->save($gallery);
 
                     return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
                 }
@@ -127,7 +127,7 @@ class FolderController extends Controller
             $form->bindRequest($request);
             if ($form->isValid()){
                 $em = $this->getDoctrine()->getEntityManager();
-                $em->getRepository('KunstmaanMediaBundle:Folder')->save($gallery, $em);
+                $em->getRepository('KunstmaanMediaBundle:Folder')->save($gallery);
 
                 return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
             }
@@ -154,7 +154,7 @@ class FolderController extends Controller
             $request = $this->getRequest();
 
             $em = $this->getDoctrine()->getEntityManager();
-            $parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id, $em);
+            $parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($id);
 
             $gallery = $parent->getStrategy()->getNewGallery($em);
             $gallery->setParent($parent);
@@ -164,7 +164,7 @@ class FolderController extends Controller
                 $form->bindRequest($request);
                 if ($form->isValid()){
                     $em = $this->getDoctrine()->getEntityManager();
-                    $em->getRepository('KunstmaanMediaBundle:Folder')->save($gallery, $em);
+                    $em->getRepository('KunstmaanMediaBundle:Folder')->save($gallery);
 
                     return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
                 }
@@ -190,7 +190,7 @@ class FolderController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     	
     	$parentid = $request->get('parentid');
-    	$parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($parentid, $em);
+    	$parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($parentid);
     	
     	$fromposition = $request->get('fromposition');
     	$afterposition = $request->get('afterposition');
@@ -216,7 +216,7 @@ class FolderController extends Controller
     					$em->persist($child);
     				}
     			}
-    		}	
+    		}
     		
     		$em->flush();
     	}

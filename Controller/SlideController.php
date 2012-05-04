@@ -25,7 +25,7 @@ class SlideController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $slide = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
+        $slide = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id);
         $slide->setContent($slide->getUuid());
         $request = $this->getRequest();
         $form = $this->createForm(new SlideType(), $slide);
@@ -34,7 +34,7 @@ class SlideController extends Controller
             $form->bindRequest($request);
             if ($form->isValid()){
                 $slide->setUuid($slide->getContent());
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($slide, $em);
+                $em->getRepository('KunstmaanMediaBundle:Media')->save($slide);
 
                 return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'media_id' => $slide->getId() )));
             }

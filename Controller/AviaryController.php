@@ -27,12 +27,12 @@ class AviaryController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+        $gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id);
 
         $helper = new MediaHelper();
         $helper->getMediaFromUrl($this->getRequest()->get('url'));
 
-        $hulp = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($image_id, $em);
+        $hulp = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($image_id);
         $picture = new Image();
         $picture->setOriginal($hulp);
         $picture->setName($hulp->getName()."-edited");

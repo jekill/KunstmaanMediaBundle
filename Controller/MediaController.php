@@ -32,7 +32,7 @@ class MediaController extends Controller
     {
     	$em = $this->getDoctrine()->getEntityManager();
     
-    	$media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
+    	$media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id);
     	$gallery = $media->getGallery();
     	$galleries = $em->getRepository('KunstmaanMediaBundle:Folder')
     	->getAllFoldersByType();
@@ -50,7 +50,7 @@ class MediaController extends Controller
     public function deleteAction($media_id)
     {
     	$em = $this->getDoctrine()->getEntityManager();
-    	$media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id, $em);
+    	$media = $em->getRepository('KunstmaanMediaBundle:Media')->getMedia($media_id);
     	$gallery = $media->getGallery();
     	$em->getRepository('KunstmaanMediaBundle:Media')->delete($media, $em);
     
@@ -65,7 +65,7 @@ class MediaController extends Controller
     public function filecreateAction($gallery_id)
     {
     	$em = $this->getDoctrine()->getEntityManager();
-    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id);
     
     	$request = $this->getRequest();
     	$helper = new MediaHelper();
@@ -80,7 +80,7 @@ class MediaController extends Controller
     				$file->setContent($helper->getMedia());
     				$file->setGallery($gallery);
     
-    				$em->getRepository('KunstmaanMediaBundle:Media')->save($file, $em);
+    				$em->getRepository('KunstmaanMediaBundle:Media')->save($file);
     
     				return new RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
     			}
@@ -105,7 +105,7 @@ class MediaController extends Controller
     public function imagecreateAction($gallery_id)
     {
     	$em = $this->getDoctrine()->getEntityManager();
-    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id);
     
     	$request = $this->getRequest();
     	$picturehelper = new MediaHelper();
@@ -120,7 +120,7 @@ class MediaController extends Controller
     				$picture->setContent($picturehelper->getMedia());
     				$picture->setGallery($gallery);
     
-    				$em->getRepository('KunstmaanMediaBundle:Media')->save($picture, $em);
+    				$em->getRepository('KunstmaanMediaBundle:Media')->save($picture);
     
     				return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
     			}
@@ -145,7 +145,7 @@ class MediaController extends Controller
     public function videocreateAction($gallery_id)
     {
     	$em = $this->getDoctrine()->getEntityManager();
-    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id);
     
     	$request = $this->getRequest();
     	$Video = new Video();
@@ -155,7 +155,7 @@ class MediaController extends Controller
     	if ('POST' == $request->getMethod()) {
     		$form->bindRequest($request);
     		if ($form->isValid()){
-    			$em->getRepository('KunstmaanMediaBundle:Media')->save($Video, $em);
+    			$em->getRepository('KunstmaanMediaBundle:Media')->save($Video);
     
     			return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
     		}
@@ -180,7 +180,7 @@ class MediaController extends Controller
     {
     	$em = $this->getDoctrine()->getEntityManager();
     
-    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id, $em);
+    	$gallery = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($gallery_id);
     
     	$request = $this->getRequest();
     	$slide = new Slide();
@@ -190,7 +190,7 @@ class MediaController extends Controller
     	if ('POST' == $request->getMethod()) {
     		$form->bindRequest($request);
     		if ($form->isValid()){
-    			$em->getRepository('KunstmaanMediaBundle:Media')->save($slide, $em);
+    			$em->getRepository('KunstmaanMediaBundle:Media')->save($slide);
     
     			return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_folder_show', array('id' => $gallery->getId(), 'slug' => $gallery->getSlug())));
     		}

@@ -34,7 +34,7 @@ class VideoController extends Controller
             $form->bindRequest($request);
             if ($form->isValid()){
                 $video->setUuid($video->getContent());
-                $em->getRepository('KunstmaanMediaBundle:Media')->save($video, $em);
+                $em->getRepository('KunstmaanMediaBundle:Media')->save($video);
 
                 return new \Symfony\Component\HttpFoundation\RedirectResponse($this->generateUrl('KunstmaanMediaBundle_media_show', array( 'media_id' => $video->getId() )));
             }
