@@ -1,5 +1,5 @@
 {% if admin is defined%}
 youtube: {{ media.code }}
 {% else %}
-<iframe width="680" height="315" type="text/html" src="http://www.youtube.com/embed/{{ media.code }}{% if autoplay is defined and autoplay %}?autoplay=1{% endif %}" frameborder="0" allowfullscreen></iframe>
+<iframe width="680" height="315" type="text/html" src="http://www.youtube.com/embed/{{ media.code }}{% if autoplay is defined and autoplay %}?autoplay=1&rel=0{% endif %}" frameborder="0" allowfullscreen></iframe>
 {% endif %}
