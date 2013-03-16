@@ -1,0 +1,61 @@
+# Media
+media: 
+  aviary:
+    title: Aviary
+    nothing: Nothing to see here.
+  
+  media:
+    no: В этой директории ещё нет файлов.
+    bulkupload:
+      addto: Загрузить файлы в "%folder%"
+    contenttab:
+      title: Контент
+    propertiestab:
+      title: Свойства
+    title: Медиа
+    edit:
+      action: Редактировать
+    download:
+      action: Скачать
+    mediainfo:
+      name: Название
+      contenttype: Тип контента
+      createdat: Дабавлено
+      updatedat: Обновлено
+      downloadlink: Ссылка для скачивания
+    addto: Добавить меди в "%folder%"
+    deletesure: Вы уверенны что хотите удалить этот пункт? 
+
+  folder:
+    addsub:
+      action: Добавить поддиректорию
+      modal:
+        title: Добавление поддиректории
+        save: Добавить
+    sub:
+      no: Все еще нет никакой поддиректории.
+    delete:
+      action: Удалить эту директорию
+      modal:
+        title: Удаление директории
+        text: Вы действительно хотите удалить директорию "%folder%"? 
+    save: Сохранить
+    contenttab:
+      title: Контент
+    propertiestab:
+      title: Свойства
+
+  bulkupload:
+    upload: Загрузить на сервер
+    bulkupload: Мультизагрузка (upload)
+    
+  slide:
+    add: Добавить слайд
+  video:
+    add: Добавить видео
+  file:
+    add: Добавить файл
+    
+  widget:
+    choose: Выбрать
+    delete: Удалить
